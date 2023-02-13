@@ -20,12 +20,16 @@ namespace ETicaretAPI.API.Controllers
         [HttpGet]
         public async Task Get()
         {
-            _productWriteRepository.AddRangeAsync(new()
-            {
-                new(){ Id=Guid.NewGuid(),Name ="Product 1", Price=100,CreatedDate=DateTime.UtcNow ,Stock=18},
-                new(){ Id=Guid.NewGuid(),Name ="Product 2", Price=200,CreatedDate=DateTime.UtcNow ,Stock=14},
-                new(){ Id=Guid.NewGuid(),Name ="Product 3", Price=300,CreatedDate=DateTime.UtcNow ,Stock=200},
-            });
+            //_productWriteRepository.AddRangeAsync(new()
+            //{
+            //    new(){ Id=Guid.NewGuid(),Name ="Product 1", Price=100,CreatedDate=DateTime.UtcNow ,Stock=18},
+            //    new(){ Id=Guid.NewGuid(),Name ="Product 2", Price=200,CreatedDate=DateTime.UtcNow ,Stock=14},
+            //    new(){ Id=Guid.NewGuid(),Name ="Product 3", Price=300,CreatedDate=DateTime.UtcNow ,Stock=200},
+            //});
+            //await _productWriteRepository.SaveAsync();
+
+            Product p = await _producReadRepository.GetByIdAsync("1b6d5a51-5cc3-4dfd-83fa-3ba25a090b3f",false);//bu şekilde traking false edilerek görsel işlemler veri tabanına işlenmeden yapılabilir
+            p.Name = "Ahmet";
             await _productWriteRepository.SaveAsync();
 
             //2 adet hata aldı;

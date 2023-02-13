@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace ETicaretAPI.Application.Repository
 {
-    public interface IReadRepository<T>:IRepository<T> where T : BaseEntity 
+    public interface IReadRepository<T> : IRepository<T> where T : BaseEntity
     {
-        IQueryable<T> GetAll();//bütün product ne varsa getirir sorguna göre gelir
-        IQueryable<T> GetWhere(Expression<Func<T, bool>> method);//where sorgusu yerine kullanılır
-        Task<T> GetSingleAsync(Expression<Func<T, bool>> method);//Şarta uygun olan ilk veri gelir
-        Task<T> GetByIdAsync(string id);//id ye göre veri gelir
+        IQueryable<T> GetAll(bool traacking = true);//bütün product ne varsa getirir sorguna göre gelir--default olarak traking mekanizması true olarak oluşturuldu
+        IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool traacking = true);//where sorgusu yerine kullanılır
+        Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool traacking = true);//Şarta uygun olan ilk veri gelir
+        Task<T> GetByIdAsync(string id, bool traacking = true);//id ye göre veri gelir
     }
 }

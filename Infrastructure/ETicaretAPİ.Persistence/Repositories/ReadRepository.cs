@@ -19,12 +19,36 @@ namespace ETicaretAPİ.Persistence.Repositories
             _context = context;
         }
         public DbSet<T> Table => _context.Set<T>();
-        public IQueryable<T> GetAll() => Table;//Bütün veri tabanındaki verileri getirir.tABLE DBSET DİR DBSETTTE QUERYABLE CİNSİNDEN SORGU ATABİLMEMİZİ SAĞLAR
-        public async Task<T> GetByIdAsync(string id)
-            //=>Table.FirstOrDefaultAsync(data=>data.Id==Guid.Parse(id));//Baseentitye
-            => await Table.FindAsync(Guid.Parse(id));
-        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method) => await Table.FirstOrDefaultAsync(method);//şarta göre ilk veri gelir
-        public IQueryable<T> GetWhere(Expression<Func<T, bool>> method) => Table.Where(method);//şarta göre olan veriler gelir
-
+        public IQueryable<T> GetAll(bool traacking = true) //Bütün veri tabanındaki verileri getirir.tABLE DBSET DİR DBSETTTE QUERYABLE CİNSİNDEN SORGU ATABİLMEMİZİ SAĞLARS
+        {
+            var query = Table.AsQueryable();
+            if (!traacking)
+                query = query.AsNoTracking();
+            return query;
+        }
+        public async Task<T> GetByIdAsync(string id, bool traacking = true)
+        //=>Table.FirstOrDefaultAsync(data=>data.Id==Guid.Parse(id));//Baseentitye
+        //=> await Table.FindAsync(Guid.Parse(id));
+        {
+            var query = Table.AsQueryable();
+            if (!traacking)
+                query = Table.AsNoTracking();
+            return await query.FirstOrDefaultAsync(data => data.Id == Guid.Parse(id));
+        }
+        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool traacking = true) //şarta göre ilk veri gelir
+        {
+            var query = Table.AsQueryable();
+            if (!traacking)
+                query = Table.AsNoTracking();
+            return await query.FirstOrDefaultAsync(method);
+        }
+        public IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool traacking = true) //Şarta göre olan veriler gelir
+        {
+            var query = Table.AsQueryable();
+            if (!traacking)
+                query = query.AsNoTracking();
+            return query;
+        }
+        // !!!!! NOT (TRAKİNG) = Traking ile veri tabanının takibi sağlanır işlem kolaylığı sağlar true durumda veri tabanın da değişiklik yapılarak işlem tamamlanır.traking false edilerek görsel işlemler veri tabanına işlenmeden yapılabilir.
     }
 }
