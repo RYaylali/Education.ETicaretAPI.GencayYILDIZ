@@ -1,4 +1,4 @@
-﻿using ETicaretAPI.Domain.Entities;
+﻿    using ETicaretAPI.Domain.Entities;
 using ETicaretAPI.Domain.Entities.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -28,7 +28,8 @@ namespace ETicaretAPİ.Persistence.Contexts
                 {
                     EntityState.Added => item.Entity.CreatedDate = DateTime.UtcNow,
                     EntityState.Modified => item.Entity.UpdatedDate = DateTime.UtcNow,
-                    EntityState.Deleted => item.Entity.DeletedDate = DateTime.UtcNow
+                    EntityState.Deleted => item.Entity.DeletedDate = DateTime.UtcNow,
+                   
                 };
             }
             return await base.SaveChangesAsync(cancellationToken);
